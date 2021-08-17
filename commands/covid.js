@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
 
 	if(country != null) {
 		const fetchCountry = await client.fetch(`https://disease.sh/v3/covid-19/countries/${country}?strict=true`);
-		const fetchVaccines = await client.fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`);
+		// const fetchVaccines = await client.fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`);
 		const countryData = await fetchCountry.json();
 		// const vaccineData = await fetchVaccines.json();
 
