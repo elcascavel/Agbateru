@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
 	const file = args[1];
 
 	if(fileType != 'dff' || fileType != 'txd' || fileType != 'img' && file != null) {
-		const fetchGameFile = await client.fetch(`http://192.168.1.220:8080/api/gta/sa/${fileType}/?name=${file}`);
+		const fetchGameFile = await client.fetch(`http://192.168.1.220:8080/api/gta/sa/?name=${file}`);
 		const gameFileData = await fetchGameFile.json();
 		if(!gameFileData[0]) {
 			return message.channel.send(`No results found for ${fileType} **${file}**.`);
