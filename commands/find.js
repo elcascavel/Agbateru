@@ -34,8 +34,12 @@ exports.run = async (client, message, args) => {
 				});
 			}
 		}
-
+		else {
+			message.reply('Please supply a valid file name in the format `++find [fileName]`');
+			return;
+		}
 	}
+
 
 	validateParameters();
 };
