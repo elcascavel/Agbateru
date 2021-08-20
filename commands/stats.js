@@ -15,6 +15,7 @@ exports.run = (client, message) => {
 			{ name: '\u200B', value: '\u200B' },
 			{ name: 'Discord.js', value: `v${version}`, inline: true },
 			{ name: 'Node', value: `${process.version}`, inline: true },
+			{ name: 'Author', value: 'Cascavel#4697', inline: true },
 		)
 		.setTimestamp();
 	message.channel.send({ embeds: [domStatsEmbed] });
