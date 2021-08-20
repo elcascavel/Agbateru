@@ -3,10 +3,10 @@ const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 
-exports.run = (client, message, args, level, channel) => { // eslint-disable-line no-unused-vars
-	message.react('👀');
+
+exports.run = (client, message) => {
 	const duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
-	const statsEmbed = new MessageEmbed()
+	const domStatsEmbed = new MessageEmbed()
 		.setColor('#f15bcb')
 		.setTitle('Domagoj Stats')
 		.addFields(
@@ -17,6 +17,5 @@ exports.run = (client, message, args, level, channel) => { // eslint-disable-lin
 			{ name: 'Node', value: `${process.version}`, inline: true },
 		)
 		.setTimestamp();
-
-	message.channel.send(statsEmbed);
+	message.channel.send({ embeds: [domStatsEmbed] });
 };
