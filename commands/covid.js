@@ -7,29 +7,33 @@ function numberWithCommas(x) {
 exports.run = async (client, message, args) => {
 
 	const country = args[0];
+	if (message.guild.id != client.config.lowpolyChestID) {
+		if (country != null) {
+			const fetchCountry = await client.fetch(`https://disease.sh/v3/covid-19/countries/${country}?strict=true`);
+			// const fetchVaccines = await client.fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`);
+			const countryData = await fetchCountry.json();
+			// const vaccineData = await fetchVaccines.json();
 
-	if(country != null) {
-		const fetchCountry = await client.fetch(`https://disease.sh/v3/covid-19/countries/${country}?strict=true`);
-		// const fetchVaccines = await client.fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`);
-		const countryData = await fetchCountry.json();
-		// const vaccineData = await fetchVaccines.json();
-
-		const covidEmbed = new MessageEmbed()
-			.setColor('#f15bcb')
-			.setTitle(countryData.country + ' COVID-19 Stats')
-			.setThumbnail(countryData.countryInfo.flag)
-			.addFields(
-				{ name: 'Cases', value: numberWithCommas(countryData.cases) },
-				{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
-				{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
-				{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
-				{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
-				// { name: 'Total Vaccines', value: numberWithCommas(vaccineData.timeline.date), inline: true },
-			);
-		message.channel.send({ embeds: [covidEmbed] });
+			const covidEmbed = new MessageEmbed()
+				.setColor('#f15bcb')
+				.setTitle(countryData.country + ' COVID-19 Stats')
+				.setThumbnail(countryData.countryInfo.flag)
+				.addFields(
+					{ name: 'Cases', value: numberWithCommas(countryData.cases) },
+					{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
+					{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
+					{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
+					{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
+					// { name: 'Total Vaccines', value: numberWithCommas(vaccineData.timeline.date), inline: true },
+				);
+			message.channel.send({ embeds: [covidEmbed] });
+		}
+		else {
+			message.reply('Please supply a valid country in the format `++covid [country]`');
+			return;
+		}
 	}
 	else {
-		message.reply('Please supply a valid country in the format `++covid [country]`');
-		return;
+		message.reply(`Use Nutter's bot for that, man.`);
 	}
 };
