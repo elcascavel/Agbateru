@@ -1,7 +1,7 @@
 exports.run = async (client, message, args) => {
 
 	const file = args[0];
-	const fetchGameFile = await client.fetch(`http://192.168.1.220:8080/api/v1/gta/?title=${file}`);
+	const fetchGameFile = await client.fetch(`http://192.168.1.220:4560/api/v1/gta/?title=${file}`);
 	const gameFileData = await fetchGameFile.json();
 
 	function validateParameters() {
