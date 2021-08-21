@@ -14,5 +14,11 @@ function reverseString(str) {
 
 exports.run = (client, message, args) => {
 	const word = args[0];
-	message.channel.send(`${word} in reverse is ${reverseString(word)}`);
+	if (word != null) {
+		message.channel.send(`${word} in reverse is ${reverseString(word)}`);
+	}
+	else {
+		message.channel.reply('Please provide a word to reverse.');
+	}
+	
 };
