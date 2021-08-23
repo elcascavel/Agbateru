@@ -1,8 +1,17 @@
 exports.run = async (client, message, args) => {
 
-	const file = args[0];
-	const fetchGameFile = await client.fetch(`http://192.168.1.220:4560/api/v1/gta/?title=${file}`);
-	const gameFileData = await fetchGameFile.json();
+	const imageFile = args[0];
+	const file = args[1];
+	let fetchGameFile;
+	let gameFileData;
+
+	if (imageFile === 'gta3' || imageFile == 'player') {
+		fetchGameFile = await client.fetch(`http://192.168.1.220:4560/api/v1/gta/sa/${imageFile}?title=${file}`);
+		gameFileData = await fetchGameFile.json();
+	}
+	else {
+		return message.channel.send(`**${imageFile}.img** file does not exist! Did you mean **gta3.img** or **player.img**?`);
+	}
 
 	function validateParameters() {
 		if (file != null) {
@@ -35,7 +44,7 @@ exports.run = async (client, message, args) => {
 			}
 		}
 		else {
-			message.reply('Please supply a valid file name in the format `++find [fileName]`');
+			message.reply('Please supply a valid file name in the format `++find [gta3/player] [fileName]`');
 			return;
 		}
 	}
