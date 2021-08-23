@@ -20,5 +20,4 @@ exports.run = (client, message, args) => {
 	else {
 		message.channel.reply('Please provide a word to reverse.');
 	}
-	
 };

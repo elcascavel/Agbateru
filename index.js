@@ -37,6 +37,9 @@ fs.readdir('./commands/', (err, files) => {
 // this event will only trigger one time after logging in
 client.once('ready', () => {
 	console.log(`Ready! Logged in as ${client.user.tag}`);
+	setInterval(() => {
+		client.user.setActivity(`${client.guilds.cache.size} servers | ++help`, { type: 'WATCHING' });
+	}, 60000);
 });
 
 // login to Discord with your app's token
