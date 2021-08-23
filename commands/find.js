@@ -9,6 +9,10 @@ exports.run = async (client, message, args) => {
 		fetchGameFile = await client.fetch(`http://192.168.1.220:4560/api/v1/gta/sa/${imageFile}?title=${file}`);
 		gameFileData = await fetchGameFile.json();
 	}
+	else if (imageFile === undefined) {
+		message.reply('Please supply a valid file name in the format `++find [gta3/player] [fileName]`');
+		return;
+	}
 	else {
 		return message.channel.send(`**${imageFile}.img** file does not exist! Did you mean **gta3.img** or **player.img**?`);
 	}
