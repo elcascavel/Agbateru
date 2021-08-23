@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
 				return message.channel.send(`No results found for **${file}**.`);
 			}
 
-			else if (gameFileData[0].urlDFF != undefined) {
+			if (gameFileData[0].urlDFF != undefined) {
 				message.channel.send({
 					files: [
 						gameFileData[0].urlDFF,
@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
 				});
 			}
 
-			else if (gameFileData[0].urlTXD != undefined) {
+			if (gameFileData[0].urlTXD != undefined) {
 				message.channel.send({
 					files: [
 						gameFileData[0].urlTXD,
@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
 				});
 			}
 
-			else if (gameFileData[0].urlIMG != undefined) {
+			if (gameFileData[0].urlIMG != undefined) {
 				message.channel.send({
 					files: [
 						gameFileData[0].urlIMG,
