@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
 		return;
 	}
 	else {
-		return message.channel.send(`**${imageFile}.img** file does not exist! Did you mean **gta3.img** or **player.img**?`);
+		return message.channel.send(`**${imageFile}.img** file does not exist! Please supply a valid file name in the format ++find [gta3/player] [fileName]`);
 	}
 
 	function validateParameters() {
