@@ -20,3 +20,8 @@ exports.run = (client, message) => {
 		.setTimestamp();
 	message.channel.send({ embeds: [domStatsEmbed] });
 };
+
+exports.stats = {
+	name: 'stats',
+	description: 'get domagoj stats',
+};

@@ -56,3 +56,8 @@ exports.run = async (client, message, args) => {
 
 	validateParameters();
 };
+
+exports.find = {
+	name: 'find',
+	description: 'find gta files from GTA:SA',
+};

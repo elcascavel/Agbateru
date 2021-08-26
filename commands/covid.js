@@ -18,22 +18,22 @@ exports.run = async (client, message, args) => {
 			}
 			else {
 				const covidEmbed = new MessageEmbed()
-				.setColor('#f15bcb')
-				.setTitle(countryData.country + ' COVID-19 Stats')
-				.setThumbnail(countryData.countryInfo.flag)
-				.addFields(
-					{ name: 'Cases', value: numberWithCommas(countryData.cases) },
-					{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
-					{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
-					{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
-					{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
+					.setColor('#f15bcb')
+					.setTitle(countryData.country + ' COVID-19 Stats')
+					.setThumbnail(countryData.countryInfo.flag)
+					.addFields(
+						{ name: 'Cases', value: numberWithCommas(countryData.cases) },
+						{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
+						{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
+						{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
+						{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
 					// { name: 'Total Vaccines', value: numberWithCommas(vaccineData.timeline.date), inline: true },
-				);
-			message.channel.send({ embeds: [covidEmbed] });
+					);
+				message.channel.send({ embeds: [covidEmbed] });
 			}
 			// const vaccineData = await fetchVaccines.json();
 
-			
+
 		}
 		else {
 			message.reply('Please supply a valid country in the format `++covid [country]`');
@@ -41,6 +41,11 @@ exports.run = async (client, message, args) => {
 		}
 	}
 	else {
-		message.reply(`Use Nutter's bot for that, man.`);
+		message.reply('Use Nutter\'s bot for that, man.');
 	}
+};
+
+exports.covid = {
+	name: 'covid',
+	description: 'get real time stats of covid per country',
 };
