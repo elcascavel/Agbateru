@@ -1,31 +1,21 @@
-const fs = require('fs');
 const { MessageEmbed } = require('discord.js');
-
-const cmdArray = [];
-
-fs.readdir('./commands/', (err, files) => {
-	if (err) return console.error(err);
-	files.forEach(file => {
-		if (!file.endsWith('.js')) return;
-		const commandName = file.split('.')[0];
-		cmdArray.push(commandName);
-	});
-});
+const { ask } = require('./ask');
+const { covid } = require('./covid');
+const { find } = require('./find');
+const { stats } = require('./stats');
+const { userinfo } = require('./userinfo');
 
 exports.run = async (client, message) => {
 
 	const helpEmbed = new MessageEmbed()
 		.setColor('#f15bcb')
 		.setTitle('Domagoj Commands')
+		.setDescription('🎵 Get down, it\'s saturday night 🎵')
 		.setThumbnail(client.user.displayAvatarURL())
 		.addFields(
-			{ name: client.config.prefix + cmdArray[0], value: 'get a random chuck norris quote', inline: true },
-			{ name: client.config.prefix + cmdArray[1], value: 'real time covid stats per country', inline: true },
-			{ name: client.config.prefix + cmdArray[2], value: 'fetch gta files', inline: true },
-			{ name: client.config.prefix + cmdArray[3], value: '🤔', inline: true },
-			{ name: client.config.prefix + cmdArray[4], value: 'pong!', inline: true },
-			{ name: client.config.prefix + cmdArray[5], value: 'reverse a keyword', inline: true },
-			{ name: client.config.prefix + cmdArray[6], value: 'get stats for domagoj', inline: true },
+			{ name: 'Helpful', value: '```' + ask.name + ', ' + userinfo.name + ', ' + stats.name + '```', inline: true },
+			{ name: 'GTA', value: '```' + find.name + '```', inline: false },
+			{ name: 'Real World', value: '```' + covid.name + '```', inline: false },
 		);
 	message.channel.send({ embeds: [helpEmbed] });
 };
