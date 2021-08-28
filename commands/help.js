@@ -52,6 +52,9 @@ exports.run = async (client, message, args) => {
 	else if (cmd === ask.name) {
 		message.channel.send({ embeds: [commandEmbedFunc(false, client.config.prefix, ask.name, 'Useful to remind users about not asking to ask.', '', '')] });
 	}
+	else if (cmd === magictxd.name) {
+		message.channel.send({ embeds: [commandEmbedFunc(false, client.config.prefix, magictxd.name, 'Useful to remind users about not asking to ask.', '', '')] });
+	}
 	else if (cmd === find.name) {
 		message.channel.send({ embeds: [commandEmbedFunc(true, client.config.prefix, find.name, 'Fetch GTA:SA files. Only gta3.img and player.img are currently supported.', '(gta3/player)', '(fileName)')] });
 	}
