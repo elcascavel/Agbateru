@@ -19,12 +19,14 @@ module.exports = {
 		if (interaction.options.getSubcommand() === 'gta3') {
 			imageFile = 'gta3';
 		}
-		else if (interaction.options.getString('player')) {
+		else if (interaction.options.getSubcommand() === 'player') {
 			imageFile = 'player';
 		}
 
 		const fetchGameFile = await interaction.client.fetch(`${interaction.client.config.gtaApiServer}/api/v1/gta/sa/${imageFile}?title=${interaction.options.getString('file')}`);
 		const gameFileData = await fetchGameFile.json();
+
+        let hasReturned = false;
 
 		if (gameFileData[0].urlDFF != undefined) {
 			await interaction.reply({
@@ -32,20 +34,21 @@ module.exports = {
 					gameFileData[0].urlDFF,
 				],
 			});
+            hasReturned = true;
 		}
 
-		if (gameFileData[0].urlTXD != undefined) {
-			await interaction.reply({
+        if (hasReturned === true && gameFileData[0].urlTXD != undefined) {
+			await interaction.followUp({
 				files: [
 					gameFileData[0].urlTXD,
 				],
 			});
 		}
 
-		if (gameFileData[0].urlIMG != undefined) {
+		else if (hasReturned === false && gameFileData[0].urlTXD != undefined) {
 			await interaction.reply({
 				files: [
-					gameFileData[0].urlIMG,
+					gameFileData[0].urlTXD,
 				],
 			});
 		}
