@@ -19,7 +19,8 @@ const rest = new REST({ version: '9' }).setToken(config.token);
 
 		await rest.put(
 			// use this for global commands = Routes.applicationCommands(config.botID),
-			Routes.applicationGuildCommands(config.botID, config.guildANGELSID),
+			// use this for guild commands = Routes.applicationGuildCommands(config.botID, config.guildid),
+			Routes.applicationCommands(config.botID),
 			{ body: commands },
 		);
 

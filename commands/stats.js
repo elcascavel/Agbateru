@@ -12,7 +12,7 @@ module.exports = {
 		const duration = moment.duration(interaction.client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
 		const klochonStatsEmbed = new MessageEmbed()
 			.setColor('#f15bcb')
-			.setTitle('Domagoj Stats')
+			.setTitle('Klochon Stats')
 			.setThumbnail(interaction.client.user.displayAvatarURL())
 			.addFields(
 				{ name: 'Memory Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}` + ' MB', inline: true },
