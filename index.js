@@ -11,35 +11,45 @@ client.querystring = querystring;
 
 const fs = require('fs');
 
-fs.readdir('./events/', (err, files) => {
-	if (err) return console.error(err);
-	files.forEach(file => {
-		const event = require(`./events/${file}`);
-		const eventName = file.split('.')[0];
-		client.on(eventName, event.bind(null, client));
-	});
-});
-
 client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-fs.readdir('./commands/', (err, files) => {
-	if (err) return console.error(err);
-	files.forEach(file => {
-		if (!file.endsWith('.js')) return;
-		const props = require(`./commands/${file}`);
-		const commandName = file.split('.')[0];
-		console.log(`Attempting to load command ${commandName}`);
-		client.commands.set(commandName, props);
-	});
-});
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+}
 
-// when the client is ready, run this code
-// this event will only trigger one time after logging in
-client.once('ready', () => {
-	console.log(`Ready! Logged in as ${client.user.tag}`);
-	setInterval(() => {
-		client.user.setActivity(`${client.guilds.cache.size} servers | ++help`, { type: 'WATCHING' });
-	}, 60000);
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	}
+	else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	const command = client.commands.get(interaction.commandName);
+
+	// If the command doesn't exist, it will return undefined, so exit early with return.
+	if (!command) return;
+
+	// If it does exist, call the command's .execute() method, and pass in the interaction variable as its argument.
+	try {
+		await command.execute(interaction);
+		// In case something goes wrong, log the error and report back to the member to let them know.
+	}
+	catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
 });
 
 // login to Discord with your app's token

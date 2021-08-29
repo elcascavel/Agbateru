@@ -1,8 +1,10 @@
-exports.run = (client, message) => {
-	message.channel.send('Please use MagicTXD, TXD Workshop is known to cause problems! <https://gtaforums.com/topic/851436-relopensrc-magictxd/>');
-};
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-exports.magictxd = {
-	name: 'magictxd',
-	description: 'remind users to use magictxd',
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('magictxd')
+		.setDescription('Remind users to use MagicTXD.'),
+	async execute(interaction) {
+		await interaction.reply('Please use MagicTXD, TXD Workshop is known to break TXD files and you may encounter streaming errors! <https://gtaforums.com/topic/851436-relopensrc-magictxd/>');
+	},
 };

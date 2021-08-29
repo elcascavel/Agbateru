@@ -1,51 +1,38 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-exports.run = async (client, message, args) => {
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('covid')
+		.setDescription('Get COVID-19 information per country.')
+		.addStringOption(option => option.setName('country').setDescription('Country to get information from').setRequired(true)),
+	async execute(interaction) {
+		const country = interaction.options.getString('country');
+		const fetchCountry = await interaction.client.fetch(`https://disease.sh/v3/covid-19/countries/${country}?strict=true`);
+		const countryData = await fetchCountry.json();
 
-	const country = args[0];
-	if (message.guild.id != client.config.lowpolyChestID) {
-		if (country != null) {
-			const fetchCountry = await client.fetch(`https://disease.sh/v3/covid-19/countries/${country}?strict=true`);
-			// const fetchVaccines = await client.fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${country}?lastdays=all&fullData=false`);
-			const countryData = await fetchCountry.json();
-			if (countryData.cases === undefined) {
-				message.reply(countryData.message);
-				return;
-			}
-			else {
-				const covidEmbed = new MessageEmbed()
-					.setColor('#f15bcb')
-					.setTitle(countryData.country + ' COVID-19 Stats')
-					.setThumbnail(countryData.countryInfo.flag)
-					.addFields(
-						{ name: 'Cases', value: numberWithCommas(countryData.cases) },
-						{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
-						{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
-						{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
-						{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
-					// { name: 'Total Vaccines', value: numberWithCommas(vaccineData.timeline.date), inline: true },
-					);
-				message.channel.send({ embeds: [covidEmbed] });
-			}
-			// const vaccineData = await fetchVaccines.json();
-
-
-		}
-		else {
-			message.reply('Please supply a valid country in the format `++covid [country]`');
+		if (countryData.cases === undefined) {
+			await interaction.reply(countryData.message + '.');
 			return;
 		}
-	}
-	else {
-		message.reply('Use Nutter\'s bot for that, man.');
-	}
-};
-
-exports.covid = {
-	name: 'covid',
-	description: 'get real time stats of covid per country',
+		else {
+			const covidEmbed = new MessageEmbed()
+				.setColor('#f15bcb')
+				.setTitle(countryData.country + ' COVID-19 Stats')
+				.setThumbnail(countryData.countryInfo.flag)
+				.addFields(
+					{ name: 'Cases', value: numberWithCommas(countryData.cases) },
+					{ name: 'Cases Today', value: numberWithCommas(countryData.todayCases) },
+					{ name: 'Deaths', value: numberWithCommas(countryData.deaths), inline: true },
+					{ name: 'Deaths Today', value: numberWithCommas(countryData.todayDeaths), inline: true },
+					{ name: 'Recovered', value: numberWithCommas(countryData.recovered), inline: true },
+					// { name: 'Total Vaccines', value: numberWithCommas(vaccineData.timeline.date), inline: true },
+				);
+			await interaction.reply({ embeds: [covidEmbed] });
+		}
+	},
 };
