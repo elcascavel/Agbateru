@@ -22,11 +22,18 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === 'player') {
 			imageFile = 'player';
 		}
-
-		const fetchGameFile = await interaction.client.fetch(`${interaction.client.config.gtaApiServer}/api/v1/gta/sa/${imageFile}?title=${interaction.options.getString('file')}`);
+		let fetchGameFile;
+		try {
+			fetchGameFile = await interaction.client.fetch(`${interaction.client.config.gtaApiServer}/api/v1/gta/sa/${imageFile}?title=${interaction.options.getString('file')}`);
+		}
+		catch(e) {
+			interaction.reply({ content: 'Connection has been refused to the server. It may be down! Try again later 😔', ephemeral: true });
+			console.log('ECONN REFUSED - SERVER IS DOWN');
+			return;
+		}
 		const gameFileData = await fetchGameFile.json();
 
-        let hasReturned = false;
+		let hasReturned = false;
 
 		if (gameFileData[0].urlDFF != undefined) {
 			await interaction.reply({
@@ -34,10 +41,10 @@ module.exports = {
 					gameFileData[0].urlDFF,
 				],
 			});
-            hasReturned = true;
+			hasReturned = true;
 		}
 
-        if (hasReturned === true && gameFileData[0].urlTXD != undefined) {
+		if (hasReturned === true && gameFileData[0].urlTXD != undefined) {
 			await interaction.followUp({
 				files: [
 					gameFileData[0].urlTXD,
