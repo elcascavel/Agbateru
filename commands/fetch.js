@@ -35,34 +35,32 @@ module.exports = {
 
 		let hasReturned = false;
 
-		if (gameFileData[0].urlDFF != undefined) {
+		try {
 			await interaction.reply({
 				files: [
 					gameFileData[0].urlDFF,
 				],
 			});
 			hasReturned = true;
-		}
 
-		if (hasReturned === true && gameFileData[0].urlTXD != undefined) {
-			await interaction.followUp({
-				files: [
-					gameFileData[0].urlTXD,
-				],
-			});
-		}
+			if (hasReturned === true) {
+				await interaction.followUp({
+					files: [
+						gameFileData[0].urlTXD,
+					],
+				});
+			}
 
-		else if (hasReturned === false && gameFileData[0].urlTXD != undefined) {
-			await interaction.reply({
-				files: [
-					gameFileData[0].urlTXD,
-				],
-			});
+			else if (hasReturned === false) {
+				await interaction.reply({
+					files: [
+						gameFileData[0].urlTXD,
+					],
+				});
+			}
 		}
-
-		else {
-			await interaction.reply(`File with name ${interaction.options.getString('file')} not found.`);
-			return;
+		catch (error) {
+			interaction.reply({ content: `${interaction.options.getString('file')} does not exist!`, ephemeral: true });
 		}
 	},
 };
