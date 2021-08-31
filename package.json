@@ -1,5 +1,5 @@
 {
-  "name": "Domagoj",
+  "name": "Klochon",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elcascavel/Domagoj.git"
+    "url": "git+https://github.com/elcascavel/Klochon.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elcascavel/Domagoj/issues"
+    "url": "https://github.com/elcascavel/Klochon/issues"
   },
-  "homepage": "https://github.com/elcascavel/Domagoj#readme",
+  "homepage": "https://github.com/elcascavel/Klochon#readme",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
