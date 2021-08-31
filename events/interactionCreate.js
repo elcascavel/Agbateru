@@ -1,6 +1,18 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
 	name: 'interactionCreate',
 	execute(interaction) {
-		console.log(`${interaction.user.tag} in #${interaction.channel.name} on server ${interaction.guild.name} triggered an interaction.`);
+		const logInteractionEmbed = new MessageEmbed()
+			.setColor('#f15bcb')
+			.setAuthor(interaction.user.tag, interaction.user.displayAvatarURL())
+			.setDescription('Interaction triggered')
+			.addFields(
+				{ name: 'Server', value: interaction.guild.name },
+				{ name: 'Channel', value: '#' + interaction.channel.name, inline: true },
+				{ name: 'Interaction', value: '/' + interaction.commandName, inline: true },
+			)
+			.setTimestamp();
+		interaction.client.channels.cache.get(interaction.client.config.logChannel).send({ embeds: [logInteractionEmbed] });
 	},
 };
