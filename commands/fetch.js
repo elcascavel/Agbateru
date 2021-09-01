@@ -33,7 +33,7 @@ module.exports = {
 		}
 		const gameFileData = await fetchGameFile.json();
 
-		let hasReturned = false;
+		let hasReturned;
 
 		try {
 			await interaction.reply({
@@ -41,17 +41,21 @@ module.exports = {
 					gameFileData[0].urlDFF,
 				],
 			});
+		}
+		catch (error) {
 			hasReturned = true;
+			interaction.reply({ content: `${interaction.options.getString('file')}.dff does not exist!`, ephemeral: true });
+		}
 
-			if (hasReturned === true) {
+		try {
+			if (hasReturned) {
 				await interaction.followUp({
 					files: [
 						gameFileData[0].urlTXD,
 					],
 				});
 			}
-
-			else if (hasReturned === false) {
+			else {
 				await interaction.reply({
 					files: [
 						gameFileData[0].urlTXD,
@@ -60,7 +64,12 @@ module.exports = {
 			}
 		}
 		catch (error) {
-			interaction.reply({ content: `${interaction.options.getString('file')} does not exist!`, ephemeral: true });
+			if (hasReturned) {
+				interaction.followUp({ content: `${interaction.options.getString('file')}.txd does not exist!`, ephemeral: true });
+			}
+			else {
+				interaction.reply({ content: `${interaction.options.getString('file')}.txd does not exist!`, ephemeral: true });
+			}
 		}
 	},
 };
