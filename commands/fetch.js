@@ -41,10 +41,12 @@ module.exports = {
 					gameFileData[0].urlDFF,
 				],
 			});
-		}
-		catch (error) {
 			hasReturned = true;
+		}
+
+		catch (error) {
 			interaction.reply({ content: `${interaction.options.getString('file')}.dff does not exist!`, ephemeral: true });
+			hasReturned = true;
 		}
 
 		try {

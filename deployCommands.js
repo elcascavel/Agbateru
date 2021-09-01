@@ -18,8 +18,10 @@ const rest = new REST({ version: '9' }).setToken(config.token);
 		console.log('Started refreshing application (/) commands.');
 
 		await rest.put(
-			// use this for global commands = Routes.applicationCommands(config.botID),
-			// use this for guild commands = Routes.applicationGuildCommands(config.botID, config.guildid),
+			// use this for global commands 
+			//Routes.applicationCommands(config.botID),
+			// use this for guild commands 
+			//Routes.applicationGuildCommands(config.botID, config.guildANGELSID),
 			Routes.applicationCommands(config.botID),
 			{ body: commands },
 		);
