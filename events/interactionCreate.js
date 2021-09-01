@@ -7,6 +7,7 @@ module.exports = {
 			.setColor('#f15bcb')
 			.setAuthor(interaction.user.tag, interaction.user.displayAvatarURL())
 			.setDescription('Interaction triggered')
+			.setThumbnail(interaction.guild.iconURL())
 			.addFields(
 				{ name: 'Server', value: interaction.guild.name },
 				{ name: 'Channel', value: '#' + interaction.channel.name, inline: true },
