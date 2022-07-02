@@ -12,7 +12,7 @@ module.exports = {
 		const duration = moment.duration(interaction.client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
 		const agbateruStatsEmbed = new MessageEmbed()
 			.setColor('#f15bcb')
-			.setTitle('Klochon Stats')
+			.setTitle('Agbateru Stats')
 			.setThumbnail(interaction.client.user.displayAvatarURL())
 			.addFields(
 				{ name: 'Memory Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}` + ' MB', inline: true },
@@ -21,7 +21,7 @@ module.exports = {
 				{ name: 'Discord.js', value: `v${version}`, inline: true },
 				{ name: 'Node', value: `${process.version}`, inline: true },
 			)
-			.setFooter('Author: Cascavel#4697')
+			.setFooter({ text: 'Author: Cascavel#4697' })
 			.setTimestamp();
 		await interaction.reply({ embeds: [agbateruStatsEmbed] });
 	},
