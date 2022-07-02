@@ -7,10 +7,10 @@ const { version } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
-		.setDescription('Check Klochon\'s stats.'),
+		.setDescription('Check Agbateru\'s stats.'),
 	async execute(interaction) {
 		const duration = moment.duration(interaction.client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
-		const klochonStatsEmbed = new MessageEmbed()
+		const agbateruStatsEmbed = new MessageEmbed()
 			.setColor('#f15bcb')
 			.setTitle('Klochon Stats')
 			.setThumbnail(interaction.client.user.displayAvatarURL())
@@ -23,6 +23,6 @@ module.exports = {
 			)
 			.setFooter('Author: Cascavel#4697')
 			.setTimestamp();
-		await interaction.reply({ embeds: [klochonStatsEmbed] });
+		await interaction.reply({ embeds: [agbateruStatsEmbed] });
 	},
 };
